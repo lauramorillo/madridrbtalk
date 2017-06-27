@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rails
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: rails
+    spec:
+      containers:
+        - name: rails
+          image: eu.gcr.io/swift-network-170520/my-rails-app:v0
+          ports:
+            - containerPort: 3000
+        - name: redis
+          image: redis:3.0
+          ports:
+            - containerPort: 6379

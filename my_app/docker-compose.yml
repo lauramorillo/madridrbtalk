@@ -1,0 +1,26 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: bundle exec puma -C config/puma.rb
+    volumes:
+      - /var/www/my_rails_app
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DB_USER: root
+      DB_PASSWORD: root
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    links:
+      - app
+    ports:
+      - "80:80"
+volumes:
+  db-data:
+    driver: local
+  bundle:
+    driver: local
